@@ -66,6 +66,7 @@ public class Oblig1 {
     } // randPerm
 
     public static int antallUlikeSortert(int[] a){
+
         //Sjekk om tabell er sortert
         //return 0 hvis tabell er tom
         //Traverser
@@ -75,9 +76,11 @@ public class Oblig1 {
         // får til sammen 3 ulike tall
 
 
-        if(a.length < 0){
+        if(a.length <= 0){
             return 0;
         }
+
+
 
 
         int teller = 1;
@@ -102,7 +105,7 @@ public class Oblig1 {
         return teller;
     }
 
-    public static int antallUlikeSortert2(int[] a){
+    public static int antallUlikeUsortert(int[] a){
         //Sjekk om tabell er sortert
         //return 0 hvis tabell er tom
         //Traverser
@@ -111,7 +114,7 @@ public class Oblig1 {
         //1 2 2 3
         // får til sammen 3 ulike tall
 
-        if(a.length < 0){
+        if(a.length <= 0){
             return 0;
         }
 
@@ -152,4 +155,69 @@ public class Oblig1 {
         }
         return true;
     }
+
+    public static void delsortering(int[] a){
+
+        int midten = a.length/2;
+
+        int oddeTallTeller = 0;
+
+        int parTallTeller = 0;
+
+        for(int i = 0; i < a.length; i++){
+
+            //partallene
+            if(a[i]%2==0){
+                parTallTeller++;
+            }else{
+                //oddetall
+                bytt(a,oddeTallTeller,i);
+                oddeTallTeller++;
+            }
+        }
+
+        //hvis det kun er partall eller oddetall, sorter hele tabellen, hvis ikke, utfør bubblesort på hver side
+        if(oddeTallTeller != 0 && parTallTeller == 0 || oddeTallTeller == 0 && parTallTeller != 0){
+            bubbleSort(a,0,a.length);
+        }
+        else{
+            bubbleSort(a,0,midten);
+            bubbleSort(a,midten,a.length);
+        }
+
+
+    }
+
+    public static void bubbleSort(int[] a, int fra, int til){
+        for(int i = fra; i < til-1; i++){
+            bubble(a, fra, til);
+        }
+    }
+
+    public static void bubble(int[] a, int fra, int til){
+        for(int i = fra; i < til-1;i++){
+            if (a[i] > a[i + 1]) {
+                bytt(a, i, i + 1);
+            }
+        }
+    }
+
+
+    public static void rotasjon(char[] a){
+
+        if(a.length == 0){
+            return;
+        }
+
+        char temp = a[a.length-1];
+
+        for(int i = a.length-2; i >= 0; i--){
+            a[i+1] = a[i];
+        }
+
+        a[0] = temp;
+
+    }
+
+
 }

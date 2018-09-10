@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
 
@@ -28,11 +29,22 @@ public class Main {
         }
 
 
-        int[] ulike = {5,4,4,2,3,3,8,7,7,7,7,7,7,7,7,7,7,7,7,7,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9};
+        int[] ulike = {6, 2, 4, 6, 9, 1, 4, 9, 10};
 
-        Oblig1.antallUlikeSortert2(ulike);
+        //Oblig1.antallUlikeUsortert(ulike);
 
+        int[] del = {6,10,9,4,1,3,8,5,2,7};
 
+        int[] i = new int[]{1, 2, 3, 4, 5, 6};
+
+        //Oblig1.delsortering(i);
+
+        char[] chars = new char[]{'A','B','C', 'D', 'E'};
+
+        System.out.println("Før: " + Arrays.toString(chars));
+        Oblig1.rotasjon(chars);
+        System.out.println("Etter: " + Arrays.toString(chars));
 
     }
+
 }
