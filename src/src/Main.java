@@ -5,8 +5,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        int[] a = {4,2,3,8,11,9};
-        Oblig1.maks(a);
+        //Oblig1.maks(a);
 
         int[] ti = Oblig1.randPerm(10);
         int[] femti = Oblig1.randPerm(50);
@@ -21,17 +20,17 @@ public class Main {
         t.add(tusen);
         t.add(hundretusen);
 
-
-        for (int[] e: t
-             ) {
-            int antall = Oblig1.ombyttinger(e);
-            System.out.println(antall);
-        }
+//
+//        for (int[] e: t
+//             ) {
+//            int antall = Oblig1.ombyttinger(e);
+//            System.out.println(antall);
+//        }
 
 
         int[] ulike = {6, 2, 4, 6, 9, 1, 4, 9, 10};
 
-        //Oblig1.antallUlikeUsortert(ulike);
+        Oblig1.antallUlikeUsortert(ulike);
 
         int[] del = {6,10,9,4,1,3,8,5,2,7};
 
@@ -41,9 +40,14 @@ public class Main {
 
         char[] chars = new char[]{'A','B','C', 'D', 'E'};
 
-        System.out.println("Før: " + Arrays.toString(chars));
-        Oblig1.rotasjon(chars);
-        System.out.println("Etter: " + Arrays.toString(chars));
+//        System.out.println("Før: " + Arrays.toString(chars));
+//        //Oblig1.rotasjon(chars,-1);
+//        System.out.println("Etter: " + Arrays.toString(chars));
+
+
+        int[] a = {5,3,4,1,2};
+        //Oblig1.indekssortering(a);
+
 
     }
 

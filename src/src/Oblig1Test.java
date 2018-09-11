@@ -21,8 +21,8 @@ public class Oblig1Test {
 
         //antallFeil += oppgave1();
         //antallFeil += oppgave2();
-        //antallFeil += oppgave3();
-        antallFeil += oppgave4();
+        antallFeil += oppgave3();
+        //antallFeil += oppgave4();
         //antallFeil += oppgave5();
         //antallFeil += oppgave6();
         //antallFeil += oppgave7();
@@ -342,7 +342,7 @@ public class Oblig1Test {
         return antallFeil;
     }
 
-    /*
+
     ///// Oppgave 5 //////////////////////////////////////
 
     public static int oppgave5() {
@@ -385,6 +385,7 @@ public class Oblig1Test {
 
         return antallFeil;
     }
+
 
     ///// Oppgave 6 //////////////////////////////////////
 
@@ -499,6 +500,8 @@ public class Oblig1Test {
         return antallFeil;
     }
 
+
+
     ///// Oppgave 7 //////////////////////////////////////
 
     public static int oppgave7() {
@@ -574,6 +577,7 @@ public class Oblig1Test {
             antallFeil++;
         }
 
+
         String[] a = {};
 
         try {
@@ -622,9 +626,12 @@ public class Oblig1Test {
             antallFeil++;
         }
 
+
         return antallFeil;
+
     }
 
+    /*
     ///// Oppgave 8 //////////////////////////////////////
 
     public static int oppgave8() {
