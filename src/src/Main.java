@@ -28,13 +28,13 @@ public class Main {
 //        }
 
 
-        int[] ulike = {6, 2, 4, 6, 9, 1, 4, 9, 10};
+        int[] ulike = {2, 4, 6, 9};
 
-        Oblig1.antallUlikeUsortert(ulike);
+//        Oblig1.antallUlikeSortert(ulike);
 
         int[] del = {6,10,9,4,1,3,8,5,2,7};
 
-        int[] i = new int[]{1, 2, 3, 4, 5, 6};
+        int[] it = new int[]{1, 2, 3, 4, 5, 6};
 
         //Oblig1.delsortering(i);
 
@@ -45,8 +45,13 @@ public class Main {
 //        System.out.println("Etter: " + Arrays.toString(chars));
 
 
-        int[] a = {5,3,4,1,2};
-        //Oblig1.indekssortering(a);
+        int[] a = {1,2,3,4,5,6};
+        //int[] minste = Oblig1.tredjeMin(a);
+        //FULLLFØR DENNE, F er feil
+
+        //Oblig1.inneholdt("ACC", "ACCBA");
+
+        Oblig1.ombyttinger(a);
 
 
     }
