@@ -10,19 +10,15 @@ public class Oblig1 {
     //Det blir færrest hvis den er sortert
     public static int maks(int[] a){
 
-        System.out.println("Init " + Arrays.toString(a));
 
-        if (a.length < 0){
-            throw new NoSuchElementException("TOM");
+        if (a.length <= 0){
+            throw new NoSuchElementException("Tabellen er tom!");
         }
 
         for(int i = 0; i < a.length-1; i++){
             if(a[i] > a[i+1])
                 bytt(a,i,i+1);
         }
-
-        System.out.println("Etter sortering: " + Arrays.toString(a));
-        System.out.println("største tallet: " + a[a.length-1]);
 
         return a[a.length-1];
     }
@@ -48,8 +44,10 @@ public class Oblig1 {
         int teller = 0;
 
         for(int i = 0; i < a.length-1; i++){
-            if(a[i] > a[i+1])
+            if(a[i] > a[i+1]) {
+                bytt(a, i, i + 1);
                 teller++;
+            }
         }
 
         return teller;
@@ -74,16 +72,7 @@ public class Oblig1 {
 
     public static int antallUlikeSortert(int[] a){
 
-        //Sjekk om tabell er sortert
-        //return 0 hvis tabell er tom
-        //Traverser
-        //Sjekk om første taller er lik andre, bruk array til å telle opp ulike
-
-        //1 2 2 3
-        // får til sammen 3 ulike tall
-
-
-        if(a.length <= 0){
+        if(a.length == 0){
             return 0;
         }
 
@@ -91,75 +80,15 @@ public class Oblig1 {
             throw new IllegalStateException("Tabellen er ikke sortert");
         }
 
-
-
-
-        int teller = 1;
-        int[] testArray = new int[a.length];
-
-        testArray[0] = a[0];
-
-        for(int i = 0; i < a.length-1; i++){
-//            for(int j = 0; j < a.length-1; j++){
-//                if(a[i] !=a[i+1] && a[i] != a[j]){
-//                    teller++;
-//                }
-//            }
-            if(a[i] != a[i+1] && notInList(testArray,i,a[i+1])){
-                teller++;
-                testArray[i] = a[i+1];
-            }
-        }
-
-        System.out.println("antall ulike " + teller);
-        System.out.println(Arrays.toString(testArray));
-        return teller;
-    }
-
-    public static boolean inversjon(int[] a){
-
-
-        for (int i = 0; i < a.length - 1; i++) {
-            for (int j = i + 1; j < a.length; j++) {
-                if (a[i] > a[j]){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public static int antallUlikeUsortert(int[] a){
-        //Sjekk om tabell er sortert
-        //return 0 hvis tabell er tom
-        //Traverser
-        //Sjekk om første taller er lik andre, bruk array til å telle opp ulike
-
-        //1 2 2 3 4 4 7 7 7 8
-        // 6 ulike; tilsammen: 10; tilsamen-reps=
-        // får til sammen 3 ulike tall
-
-        if(a.length <= 0){
-            return 0;
-        }
-
         int teller = 0;
 
-        if(a.length == 1){
-            teller++;
-        }
-
         for(int i = 0; i < a.length-1; i++){
-            //sjekk
-            if(a[i] != a[i+1] && notInList(a,i+1,a[i+1])){
+            if(a[i] == a[i+1]){
                 teller++;
             }
         }
-
-        System.out.println("antall ulike " + teller);
-        return teller;
+        return a.length-teller;
     }
-
 
     public static boolean notInList(int[] array, int indeks, int tall){
         for(int i = 0; i < array.length; i++){
@@ -173,16 +102,37 @@ public class Oblig1 {
         return false;
     }
 
-    public static boolean notInListFØRSTEFUNGERTE(int[] array, int indeks, int tall){
-        for(int i = 0; i < array.length; i++){
-            if(i == indeks){
-                continue;
-            }
-            if(array[i] == tall && i != indeks){
-                return false;
+    public static boolean inversjon(int[] a){
+
+        int antall = 0;
+
+        for (int i = 0; i < a.length - 1; i++) {
+            for (int j = i + 1; j < a.length; j++) {
+                if (a[i] > a[j]){
+                    antall++;
+                }
             }
         }
-        return true;
+        if(antall > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static int antallUlikeUsortert(int[] a){
+        int teller = a.length;
+
+        for(int i = 0; i < a.length; i++){
+            for(int j = i+1; j < a.length; j++){
+                if(a[j] == a[i]){
+                    teller--;
+                    break;
+                }
+            }
+        }
+
+        return teller;
     }
 
     public static void delsortering(int[] a){
@@ -194,12 +144,13 @@ public class Oblig1 {
         int parTallTeller = 0;
 
         for(int i = 0; i < a.length; i++){
-
             //partallene
             if(a[i]%2==0){
                 parTallTeller++;
             }else{
                 //oddetall
+                //deler også opp tabellen slik at man får oddetall på venstre side
+                //og partall på høyre side
                 bytt(a,oddeTallTeller,i);
                 oddeTallTeller++;
             }
@@ -207,28 +158,70 @@ public class Oblig1 {
 
         //hvis det kun er partall eller oddetall, sorter hele tabellen, hvis ikke, utfør bubblesort på hver side
         if(oddeTallTeller != 0 && parTallTeller == 0 || oddeTallTeller == 0 && parTallTeller != 0){
-            bubbleSort(a,0,a.length);
+            kvikksortering(a);
         }
         else{
-            bubbleSort(a,0,midten);
-            bubbleSort(a,midten,a.length);
+            kvikksortering(a,0,midten);
+            kvikksortering(a,midten,a.length);
         }
 
 
     }
 
-    public static void bubbleSort(int[] a, int fra, int til){
-        for(int i = fra; i < til-1; i++){
-            bubble(a, fra, til);
+    //Kvikksorterings metoder fra kompendiet for å effektivisere søket
+    private static void kvikksortering0(int[] a, int v, int h)  // en privat metode
+    {
+        if (v >= h) return;  // a[v:h] er tomt eller har maks ett element
+        int k = sParter0(a, v, h, (v + h)/2);  // bruker midtverdien
+        kvikksortering0(a, v, k - 1);     // sorterer intervallet a[v:k-1]
+        kvikksortering0(a, k + 1, h);     // sorterer intervallet a[k+1:h]
+    }
+
+    public static void kvikksortering(int[] a, int fra, int til) // a[fra:til>
+    {
+        fratilKontroll(a.length, fra, til);  // sjekker når metoden er offentlig
+        kvikksortering0(a, fra, til - 1);  // v = fra, h = til - 1
+    }
+
+    public static void kvikksortering(int[] a)   // sorterer hele tabellen
+    {
+        kvikksortering0(a, 0, a.length - 1);
+    }
+    private static int parter0(int[] a, int v, int h, int skilleverdi)
+    {
+        while (true)                                  // stopper når v > h
+        {
+            while (v <= h && a[v] < skilleverdi) v++;   // h er stoppverdi for v
+            while (v <= h && a[h] >= skilleverdi) h--;  // v er stoppverdi for h
+
+            if (v < h) bytt(a,v++,h--);                 // bytter om a[v] og a[h]
+            else  return v;  // a[v] er nåden første som ikke er mindre enn skilleverdi
         }
     }
 
-    public static void bubble(int[] a, int fra, int til){
-        for(int i = fra; i < til-1;i++){
-            if (a[i] > a[i + 1]) {
-                bytt(a, i, i + 1);
-            }
-        }
+    private static int sParter0(int[] a, int v, int h, int indeks)
+    {
+        bytt(a, indeks, h);           // skilleverdi a[indeks] flyttes bakerst
+        int pos = parter0(a, v, h - 1, a[h]);  // partisjonerer a[v:h − 1]
+        bytt(a, pos, h);              // bytter for å få skilleverdien på rett plass
+        return pos;                   // returnerer posisjonen til skilleverdien
+    }
+
+
+
+    public static void fratilKontroll(int tablengde, int fra, int til)
+    {
+        if (fra < 0)                                  // fra er negativ
+            throw new ArrayIndexOutOfBoundsException
+                    ("fra(" + fra + ") er negativ!");
+
+        if (til > tablengde)                          // til er utenfor tabellen
+            throw new ArrayIndexOutOfBoundsException
+                    ("til(" + til + ") > tablengde(" + tablengde + ")");
+
+        if (fra > til)                                // fra er større enn til
+            throw new IllegalArgumentException
+                    ("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
     }
 
 
@@ -285,10 +278,8 @@ public class Oblig1 {
 
     public static String flett(String s, String t){
 
-        if(s.length() < 0)
-            throw new NoSuchElementException("fail");
-
         StringBuilder sb = new StringBuilder();
+
 
         String lengste;
         String korteste;
@@ -322,6 +313,10 @@ public class Oblig1 {
 
     public static String flett(String... s){
 
+        if(s.length <= 0){
+            return "";
+        }
+
         String lengste = s[0];
 
         StringBuilder sb = new StringBuilder();
@@ -345,7 +340,7 @@ public class Oblig1 {
         return sb.toString();
     }
 
-    public static int[] indekssortering(int[] a){
+    public static int[] indekssorteringDØD(int[] a){
 
         int[] indekser = new int[a.length];
         int[] kopiAvTabellen = Arrays.copyOf(a,a.length);
@@ -380,21 +375,211 @@ public class Oblig1 {
         return new int[]{};
     }
 
+    public static int[] indekssortering(int[] a){
 
-    public static int min(int[] a, int fra, int til)
-    {
-        if (fra < 0 || til > a.length || fra >= til)
-            throw new IllegalArgumentException("Illegalt intervall!");
 
-        int m = fra;             // indeks til minste verdi i a[fra:til>
-        int minverdi = a[fra];  // minste verdi i a[fra:til>
 
-        for (int i = fra + 1; i < til; i++) if (a[i] < minverdi)
-        {
-            m = i;               // indeks til minste verdi oppdateres
-            minverdi = a[m];    // minste verdi oppdateres
+        int[] hjelpeTabell = new int[a.length];
+
+        for (int i = 0; i < a.length; i++){
+            hjelpeTabell[i] = a[i];
         }
 
-        return m;  // posisjonen til minste verdi i a[fra:til>
+        int[] indekser = new int[a.length];
+
+
+        for(int i = 0; i < hjelpeTabell.length; i++) {
+            int indeks = min(hjelpeTabell);
+            indekser[i] = indeks;
+            hjelpeTabell[indeks] = 0x7fffffff; // legger tallet 2147483647 sist
+        }
+
+        System.out.println(Arrays.toString(indekser));
+
+        return indekser;
     }
+
+    public static int min(int[]a){
+        int min = a[0];
+        int minIndeks = 0;
+
+        for(int i = 0; i < a.length; i++){
+           if(a[i] < min){
+               min = a[i];
+               minIndeks = i;
+           }
+        }
+        return minIndeks;
+    }
+
+    public static int[] tredjeMin(int[] a) // ny versjon
+    {
+        int n = a.length;     // tabellens lengde
+        if (n < 3) throw      // må ha minst to verdier
+                new java.util.NoSuchElementException("a.length(" + n + ") < 3!");
+
+        int m = 0;      // m er posisjonen til største verdi
+        int nm = 1;     // nm er posisjonen til nest største verdi
+        int tnm = 2; // tnm er posisjonen til nest største verdi
+
+        // bytter om m og nm hvis a[1] er større enn a[0]
+        int[] hjelpeTabell = new int[]{a[0],a[1],a[2]};
+        hjelpeTabell = indekssortering(hjelpeTabell);
+
+        m = hjelpeTabell[0];
+        nm = hjelpeTabell[1];
+        tnm = hjelpeTabell[2];
+
+        int minsteverdi = a[m];                // største verdi
+        int nestminstverdi = a[nm];           // nest største verdi
+        int tredjeverdi = a[tnm];
+
+        //starter på 3(4) element
+        for (int i = 3; i < n; i++) {
+            if (a[i] < tredjeverdi) {
+
+                if (a[i] < nestminstverdi) {
+
+                    if (a[i] < minsteverdi) {
+                        tnm = nm;
+                        tredjeverdi = nestminstverdi;     // ny tredje minst
+
+                        nm = m;
+                        nestminstverdi = minsteverdi;     // ny nest minst
+
+                        m = i;
+                        minsteverdi = a[m];              // ny minst
+                    } else {
+                        tnm = nm;
+                        tredjeverdi = nestminstverdi;    // ny tredjeminst
+
+                        nm = i;
+                        nestminstverdi = a[nm];         // ny nest minst
+                    }
+                }
+                else{
+                    tnm = nm;
+                    tredjeverdi = nestminstverdi;    // ny tredjeminst
+                }
+            }
+
+        }// for
+        return new int[] {m,nm,tnm};    // n i posisjon 0, nm i posisjon 1, tnm i posisjon 2
+
+    }
+
+
+    public static int[] nestMaks(int[] a) // ny versjon
+    {
+        int n = a.length;     // tabellens lengde
+        if (n < 2) throw      // må ha minst to verdier
+                new java.util.NoSuchElementException("a.length(" + n + ") < 2!");
+
+        int m = 0;      // m er posisjonen til største verdi
+        int nm = 1;     // nm er posisjonen til nest største verdi
+
+        // bytter om m og nm hvis a[1] er større enn a[0]
+        if (a[1] > a[0]) { m = 1; nm = 0; }
+
+        int maksverdi = a[m];                // største verdi
+        int nestmaksverdi = a[nm];           // nest største verdi
+
+        for (int i = 2; i < n; i++)
+        {
+            if (a[i] > nestmaksverdi)
+            {
+                if (a[i] > maksverdi)
+                {
+                    nm = m;
+                    nestmaksverdi = maksverdi;     // ny nest størst
+
+                    m = i;
+                    maksverdi = a[m];              // ny størst
+                }
+                else
+                {
+                    nm = i;
+                    nestmaksverdi = a[nm];         // ny nest størst
+                }
+            }
+        } // for
+
+        return new int[] {m,nm};    // n i posisjon 0, nm i posisjon 1
+
+    }
+
+    public static boolean inneholdt(String s, String t){
+
+        int lengsteOrd = 0;
+        int kortesteOrd = 0;
+
+        String kortesteString;
+
+        if(s.length() > t.length()){
+            lengsteOrd = s.length();
+            kortesteOrd = t.length();
+            kortesteString = t;
+        }else{
+            lengsteOrd = t.length();
+            kortesteOrd = s.length();
+            kortesteString = s;
+        }
+
+        int finnesTeller = s.length();
+
+        if(s.isEmpty() && t.isEmpty()){
+            return true;
+        }
+
+        if(t.isEmpty()){
+            return false;
+        }
+
+        int funnetPos = 0;
+
+        int duplikater = 0;
+
+        //boolean finnes = false;
+
+        int[] indekser = new int[lengsteOrd];
+
+        int i = 0;
+
+        if(s.charAt(0) == t.charAt(0)){
+            indekser[0] = 0;
+            finnesTeller--;
+            i = 1;
+        }else{
+            i = 0;
+        }
+
+        for(; i < kortesteOrd; i++){
+            for(int j = 0; j < lengsteOrd; j++){
+                if(s.charAt(i) == t.charAt(j) && !alleredeFunnet(indekser,j)){
+                    indekser[i] = j;
+                    finnesTeller--;
+                    break;
+                }
+            }
+        }
+
+        if(finnesTeller == 0){
+            System.out.println("Finnes");
+            return true;
+        }else{
+            System.out.println("NOPE");
+            return false;
+        }
+    }
+
+    public static boolean alleredeFunnet(int[] a, int indeks){
+        for(int i = 0; i < a.length; i++){
+            if(a[i] == indeks){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }

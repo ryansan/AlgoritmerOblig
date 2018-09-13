@@ -337,6 +337,7 @@ public class Oblig1Test {
                         ("              Hint: Bruk en partisjoneringsteknikk!");
                 antallFeil++;
             }
+            System.out.println("TID : " + tid);
         }
 
         return antallFeil;
@@ -953,6 +954,8 @@ public class Oblig1Test {
                     ("Oppgave 10: n) Dette (" + tid + " ms) gikk sakte! Finn en bedre algoritme!");
             antallFeil++;
         }
+
+        System.out.println(tid);
 
         if (b != false) {
             System.out.println

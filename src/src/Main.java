@@ -49,9 +49,10 @@ public class Main {
         //int[] minste = Oblig1.tredjeMin(a);
         //FULLLFØR DENNE, F er feil
 
-        //Oblig1.inneholdt("ACC", "ACCBA");
+        int[] k = {4,2,5,1};
+        //Oblig1.inneholdt("ABBA", "BARBER");
+        System.out.println(Arrays.toString(k));
 
-        Oblig1.ombyttinger(a);
 
 
     }
