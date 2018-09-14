@@ -4,10 +4,12 @@ import java.util.Random;
 
 public class Oblig1 {
 
-    //Når blir det flest ombyttinger?
-    //Det blir flest ombytter dersom elementene er sortert synkende.
-    //Når blir det færrest ombyttinger?
-    //Det blir færrest hvis den er sortert
+    // Naar blir det flest ombyttinger?
+    // Det blir flest ombyttinger dersom det hoyeste tallet ligger forst i tabellen.
+    //
+    // Naar blir det faerrest ombyttinger?
+    // Det blir faerrest hvis den er sortert etter stigende rekkefolge, da blir
+    // det ingen ombyttinger.
     public static int maks(int[] a){
 
 
@@ -37,8 +39,14 @@ public class Oblig1 {
         a[j] = temp;
     }
 
-    //Hvor mange blir det i gjennomsnitt?
-    //Ser at jeg i gjennomsnitt får halvparten, eller litt under. SJEKK OM BEDRE ENN MAKS
+    // Hvor mange blir det i gjennomsnitt?
+    // I gjennomsnitt blir ombyttinger lik n-Hn der n er
+    // antall elementer og h(n) er det harmoniske tallet log(n)+5.77
+    // Etter aa ha testet med hoye tall som 10.000 og 100.000, ser
+    // jeg at jeg i gjennomsnitt blir naermere n, jo hoyere n er.
+    // Maks metoden: n=100000: 100000-log(100000) + 0.5777 = 99995.577
+    // Gamle maks-metoden: n=100.000: log(n) – 0,423 = 11,1
+    // Paa grunnlag av dette kan vi si at de tidligere maks-metodene er mer effektive
     public static int ombyttinger(int[] a){
 
         int teller = 0;
@@ -53,22 +61,6 @@ public class Oblig1 {
         return teller;
     }
 
-    public static int[] randPerm(int n)
-    {
-        int[] a = new int[n]; // fyller tabellen med 1, 2, . . , n
-        for (int i = 0; i < n; i++) a[i] = i+1;
-
-        Random r = new Random();  // hentes fra java.util
-
-        for (int k = n-1; k > 0; k--)
-        {
-            int i = r.nextInt(k+1);  // tilfeldig tall fra [0,k]
-            bytt(a,k,i);
-        }
-
-        return a; // tabellen med permutasjonen returneres
-
-    } // randPerm
 
     public static int antallUlikeSortert(int[] a){
 
@@ -88,18 +80,6 @@ public class Oblig1 {
             }
         }
         return a.length-teller;
-    }
-
-    public static boolean notInList(int[] array, int indeks, int tall){
-        for(int i = 0; i < array.length; i++){
-            if(i == indeks){
-                continue;
-            }
-            if(array[i] == tall && i != indeks){
-                return true;
-            }
-        }
-        return false;
     }
 
     public static boolean inversjon(int[] a){
@@ -149,14 +129,14 @@ public class Oblig1 {
                 parTallTeller++;
             }else{
                 //oddetall
-                //deler også opp tabellen slik at man får oddetall på venstre side
-                //og partall på høyre side
+                //deler ogsaa opp tabellen slik at man faar oddetall paa venstre side
+                //og partall på hoyre side
                 bytt(a,oddeTallTeller,i);
                 oddeTallTeller++;
             }
         }
 
-        //hvis det kun er partall eller oddetall, sorter hele tabellen, hvis ikke, utfør bubblesort på hver side
+        //hvis det kun er partall eller oddetall, sorter hele tabellen, hvis ikke, utfor quicksort på hver side
         if(oddeTallTeller != 0 && parTallTeller == 0 || oddeTallTeller == 0 && parTallTeller != 0){
             kvikksortering(a);
         }
@@ -164,8 +144,6 @@ public class Oblig1 {
             kvikksortering(a,0,midten);
             kvikksortering(a,midten,a.length);
         }
-
-
     }
 
     //Kvikksorterings metoder fra kompendiet for å effektivisere søket
@@ -187,6 +165,7 @@ public class Oblig1 {
     {
         kvikksortering0(a, 0, a.length - 1);
     }
+
     private static int parter0(int[] a, int v, int h, int skilleverdi)
     {
         while (true)                                  // stopper når v > h
@@ -280,7 +259,6 @@ public class Oblig1 {
 
         StringBuilder sb = new StringBuilder();
 
-
         String lengste;
         String korteste;
 
@@ -299,15 +277,10 @@ public class Oblig1 {
             sb.append(t.charAt(i));
         }
 
-        System.out.println(sb.toString());
-        System.out.println("APPENDER: ");
-
         for(; i < lengste.length(); i++){
             sb.append(lengste.charAt(i));
         }
 
-
-        System.out.println(sb.toString());
         return sb.toString();
     }
 
@@ -321,10 +294,10 @@ public class Oblig1 {
 
         StringBuilder sb = new StringBuilder();
 
-        for (String streng: s
+        for (String temp: s
              ) {
-            if(streng.length() > lengste.length()){
-                lengste = streng;
+            if(temp.length() > lengste.length()){
+                lengste = temp;
             }
 
         }
@@ -340,44 +313,8 @@ public class Oblig1 {
         return sb.toString();
     }
 
-    public static int[] indekssorteringDØD(int[] a){
-
-        int[] indekser = new int[a.length];
-        int[] kopiAvTabellen = Arrays.copyOf(a,a.length);
-        int[] hjelpeTabell = new int[a.length];
-
-
-        int minste = a[0];
-        int minsteIndeks = 0;
-
-        for(int i = 0; i < kopiAvTabellen.length; i++){
-            for(int j = 0; j < kopiAvTabellen.length; j++){
-                if(kopiAvTabellen[i] > kopiAvTabellen[j]){
-                    int temp = kopiAvTabellen[i];
-                    kopiAvTabellen[i] = kopiAvTabellen[j];
-                    kopiAvTabellen[j] = temp;
-                }
-            }
-            if(a[i] < minste){
-                minste = a[i];
-                minsteIndeks = i;
-                bytt(kopiAvTabellen,i, minsteIndeks);
-            }
-        }
-
-        System.out.println(Arrays.toString(a));
-        System.out.println(Arrays.toString(kopiAvTabellen));
-
-//        for(int i = kopiAvTabellen.length; i > 0; i++){
-//            if(kopiAvTabellen[i]
-//        }
-
-        return new int[]{};
-    }
 
     public static int[] indekssortering(int[] a){
-
-
 
         int[] hjelpeTabell = new int[a.length];
 
@@ -387,14 +324,11 @@ public class Oblig1 {
 
         int[] indekser = new int[a.length];
 
-
         for(int i = 0; i < hjelpeTabell.length; i++) {
             int indeks = min(hjelpeTabell);
             indekser[i] = indeks;
             hjelpeTabell[indeks] = 0x7fffffff; // legger tallet 2147483647 sist
         }
-
-        System.out.println(Arrays.toString(indekser));
 
         return indekser;
     }
@@ -415,171 +349,105 @@ public class Oblig1 {
     public static int[] tredjeMin(int[] a) // ny versjon
     {
         int n = a.length;     // tabellens lengde
-        if (n < 3) throw      // må ha minst to verdier
-                new java.util.NoSuchElementException("a.length(" + n + ") < 3!");
+        if (n < 3) throw      // må ha minst tre verdier
+                new java.util.NoSuchElementException("Maa ha minst tre verdier i tabellen!");
 
-        int m = 0;      // m er posisjonen til største verdi
-        int nm = 1;     // nm er posisjonen til nest største verdi
-        int tnm = 2; // tnm er posisjonen til nest største verdi
-
-        // bytter om m og nm hvis a[1] er større enn a[0]
         int[] hjelpeTabell = new int[]{a[0],a[1],a[2]};
         hjelpeTabell = indekssortering(hjelpeTabell);
 
-        m = hjelpeTabell[0];
-        nm = hjelpeTabell[1];
-        tnm = hjelpeTabell[2];
+        int m = hjelpeTabell[0];              // m er posisjonen til minste verdi
+        int nm = hjelpeTabell[1];             // nm er posisjonen til nest minste verdi
+        int tnm = hjelpeTabell[2];            // tnm er posisjonen til tredje minste verdi
 
-        int minsteverdi = a[m];                // største verdi
-        int nestminstverdi = a[nm];           // nest største verdi
-        int tredjeverdi = a[tnm];
+        int minsteverdi = a[m];                // minste verdi
+        int nestminstverdi = a[nm];            // nest minste verdi
+        int tredjeverdi = a[tnm];              // tredje minste verdi
 
         //starter på 3(4) element
         for (int i = 3; i < n; i++) {
-            if (a[i] < tredjeverdi) {
+            if (a[i] < minsteverdi) {
+                tnm = nm;
+                tredjeverdi = nestminstverdi;     // ny tredje minst
 
-                if (a[i] < nestminstverdi) {
+                nm = m;
+                nestminstverdi = minsteverdi;     // ny nest minst
 
-                    if (a[i] < minsteverdi) {
-                        tnm = nm;
-                        tredjeverdi = nestminstverdi;     // ny tredje minst
+                m = i;
+                minsteverdi = a[m];               // ny minst
+            }
 
-                        nm = m;
-                        nestminstverdi = minsteverdi;     // ny nest minst
+            else if(a[i] < nestminstverdi) {
+                tnm = nm;
+                tredjeverdi = nestminstverdi;    // ny tredjeminst
 
-                        m = i;
-                        minsteverdi = a[m];              // ny minst
-                    } else {
-                        tnm = nm;
-                        tredjeverdi = nestminstverdi;    // ny tredjeminst
-
-                        nm = i;
-                        nestminstverdi = a[nm];         // ny nest minst
-                    }
-                }
-                else{
-                    tnm = nm;
-                    tredjeverdi = nestminstverdi;    // ny tredjeminst
-                }
+                nm = i;
+                nestminstverdi = a[nm];         // ny nest minst
+            }
+            else if(a[i] < tredjeverdi) {
+                tnm = i;
+                tredjeverdi = a[i];    // ny tredjeminst
             }
 
         }// for
+
         return new int[] {m,nm,tnm};    // n i posisjon 0, nm i posisjon 1, tnm i posisjon 2
-
     }
 
 
-    public static int[] nestMaks(int[] a) // ny versjon
-    {
-        int n = a.length;     // tabellens lengde
-        if (n < 2) throw      // må ha minst to verdier
-                new java.util.NoSuchElementException("a.length(" + n + ") < 2!");
+    public static boolean inneholdt(String a, String b){
 
-        int m = 0;      // m er posisjonen til største verdi
-        int nm = 1;     // nm er posisjonen til nest største verdi
-
-        // bytter om m og nm hvis a[1] er større enn a[0]
-        if (a[1] > a[0]) { m = 1; nm = 0; }
-
-        int maksverdi = a[m];                // største verdi
-        int nestmaksverdi = a[nm];           // nest største verdi
-
-        for (int i = 2; i < n; i++)
-        {
-            if (a[i] > nestmaksverdi)
-            {
-                if (a[i] > maksverdi)
-                {
-                    nm = m;
-                    nestmaksverdi = maksverdi;     // ny nest størst
-
-                    m = i;
-                    maksverdi = a[m];              // ny størst
-                }
-                else
-                {
-                    nm = i;
-                    nestmaksverdi = a[nm];         // ny nest størst
-                }
-            }
-        } // for
-
-        return new int[] {m,nm};    // n i posisjon 0, nm i posisjon 1
-
-    }
-
-    public static boolean inneholdt(String s, String t){
-
-        int lengsteOrd = 0;
-        int kortesteOrd = 0;
-
-        String kortesteString;
-
-        if(s.length() > t.length()){
-            lengsteOrd = s.length();
-            kortesteOrd = t.length();
-            kortesteString = t;
-        }else{
-            lengsteOrd = t.length();
-            kortesteOrd = s.length();
-            kortesteString = s;
-        }
-
-        int finnesTeller = s.length();
-
-        if(s.isEmpty() && t.isEmpty()){
+        if(a.length() == 0 && b.length() == 0) {
             return true;
-        }
-
-        if(t.isEmpty()){
+        } else if(a.length() > 0 && b.length() == 0) {
             return false;
         }
 
-        int funnetPos = 0;
 
-        int duplikater = 0;
+        char[] alfabet = new char[29];
+        int tellerForASCIIVerdi = (int) 'A';
 
-        //boolean finnes = false;
+        int[] antallBokstaverArray = new int[29];
 
-        int[] indekser = new int[lengsteOrd];
-
-        int i = 0;
-
-        if(s.charAt(0) == t.charAt(0)){
-            indekser[0] = 0;
-            finnesTeller--;
-            i = 1;
-        }else{
-            i = 0;
+        //Populerer alfabet tabellen
+        for(int i = 0; i < alfabet.length-3;i++){
+            alfabet[i] = (char) tellerForASCIIVerdi;
+            tellerForASCIIVerdi++;
         }
 
-        for(; i < kortesteOrd; i++){
-            for(int j = 0; j < lengsteOrd; j++){
-                if(s.charAt(i) == t.charAt(j) && !alleredeFunnet(indekser,j)){
-                    indekser[i] = j;
-                    finnesTeller--;
-                    break;
+        //LEGG TIL ÆØÅ
+        alfabet[26] = (int) 'Æ';
+        alfabet[27] = (int) 'Ø';
+        alfabet[28] = (int) 'Å';
+
+        //Tell opp antallet av hver bokstav i String a
+        for(int i = 0; i < a.length(); i++){
+            for(int j = 0; j < alfabet.length; j++){
+                if(a.charAt(i) == alfabet[j]){
+                    antallBokstaverArray[j]++;
                 }
             }
         }
 
-        if(finnesTeller == 0){
-            System.out.println("Finnes");
-            return true;
-        }else{
-            System.out.println("NOPE");
-            return false;
-        }
-    }
-
-    public static boolean alleredeFunnet(int[] a, int indeks){
-        for(int i = 0; i < a.length; i++){
-            if(a[i] == indeks){
-                return true;
+        //Tell ned antallet av hver bokstav i String b mot antallet
+        //i hver indeks i antallBokstavArray
+        for(int i = 0; i < b.length(); i++){
+            for(int j = 0; j < alfabet.length; j++){
+                if(b.charAt(i) == alfabet[j]){
+                    antallBokstaverArray[j]--;
+                }
             }
         }
-        return false;
-    }
 
+
+        //Sjekker om det fortsatt finnes tall i antallBokstavArray
+        //hvis det finnes, return false
+        for(int i = 0; i < antallBokstaverArray.length; i++){
+            if(antallBokstaverArray[i] > 0){
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 }

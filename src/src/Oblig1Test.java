@@ -19,16 +19,16 @@ public class Oblig1Test {
     public static void main(String[] args) {
         int antallFeil = 0;
 
-        //antallFeil += oppgave1();
-        //antallFeil += oppgave2();
-        //antallFeil += oppgave3();
-        //antallFeil += oppgave4();
-        //antallFeil += oppgave5();
-        //antallFeil += oppgave6();
-        //antallFeil += oppgave7();
-        //antallFeil += oppgave8();
+        antallFeil += oppgave1();
+        antallFeil += oppgave2();
+        antallFeil += oppgave3();
+        antallFeil += oppgave4();
+        antallFeil += oppgave5();
+        antallFeil += oppgave6();
+        antallFeil += oppgave7();
+        antallFeil += oppgave8();
         antallFeil += oppgave9();
-        //antallFeil += oppgave10();
+        antallFeil += oppgave10();
 
 
         if (antallFeil == 0) {
@@ -337,7 +337,6 @@ public class Oblig1Test {
                         ("              Hint: Bruk en partisjoneringsteknikk!");
                 antallFeil++;
             }
-            System.out.println("TID : " + tid);
         }
 
         return antallFeil;
@@ -954,8 +953,6 @@ public class Oblig1Test {
                     ("Oppgave 10: n) Dette (" + tid + " ms) gikk sakte! Finn en bedre algoritme!");
             antallFeil++;
         }
-
-        System.out.println(tid);
 
         if (b != false) {
             System.out.println
